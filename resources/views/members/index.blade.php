@@ -34,7 +34,8 @@
                 <td>{{ $member->email ?? '-' }}</td>
                 <td>{{ $member->phone }}</td>
                 <td>{{ ucfirst($member->membership_type) }}</td>
-                <td>{{ $member->expire_date }}</td>
+                <td>{{ $member->start_date ? $member->start_date->format('Y-m-d') : '-' }}</td>
+                <td>{{ $member->expire_date ? $member->expire_date->format('Y-m-d') : '-' }}</td>
                 <td>
                     @if($member->status == 'active')
                         <span class="badge bg-success">Aktif</span>
