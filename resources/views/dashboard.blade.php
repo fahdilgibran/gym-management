@@ -1,17 +1,52 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+@extends('layouts.main')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 dark:text-gray-100">
-                    {{ __("You're logged in!") }}
+@section('content')
+<div class="container">
+    <h1 class="mb-4">🏋️‍♂️ Dashboard Gym Management</h1>
+
+    <div class="row g-4">
+        <!-- Statistik Cards -->
+        <div class="col-md-3">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <h5>Total Member</h5>
+                    <h2>{{ $totalMembers }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-success shadow">
+                <div class="card-body">
+                    <h5>Member Aktif</h5>
+                    <h2>{{ $activeMembers }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-info shadow">
+                <div class="card-body">
+                    <h5>Total Sesi</h5>
+                    <h2>{{ $totalSessions }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card text-white bg-warning shadow">
+                <div class="card-body">
+                    <h5>Kalori Terbakar</h5>
+                    <h2>{{ number_format($totalCalories) }}</h2>
                 </div>
             </div>
         </div>
     </div>
-</x-app-layout>
+
+    <div class="mt-5">
+        <a href="{{ route('members.index') }}" class="btn btn-primary btn-lg me-3">
+            👥 Kelola Member
+        </a>
+        <a href="{{ route('sessions.index') }}" class="btn btn-success btn-lg">
+            💪 Catat Sesi Latihan
+        </a>
+    </div>
+</div>
+@endsection
