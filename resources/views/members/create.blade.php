@@ -73,4 +73,14 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Auto generate Member Code
+    document.addEventListener('DOMContentLoaded', function() {
+        const codeInput = document.querySelector('input[name="member_code"]');
+        if (codeInput) {
+            codeInput.value = 'MEM-' + Math.floor(1000 + Math.random() * 9000);
+        }
+    });
+</script>
 @endsection

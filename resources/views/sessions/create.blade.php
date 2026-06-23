@@ -14,7 +14,9 @@
                     <select name="member_id" class="form-control" required>
                         <option value="">-- Pilih Member --</option>
                         @foreach($members as $member)
-                            <option value="{{ $member->id }}">{{ $member->name }} ({{ $member->member_code }})</option>
+                            <option value="{{ $member->id }}">
+                                {{ $member->name }} ({{ $member->member_code }})
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -26,8 +28,8 @@
                     </div>
                     <div class="col-md-6 mb-3">
                         <label>Tipe Sesi</label>
-                        <select name="session_type" class="form-control" required>
-                            <option value="">-- Pilih Tipe --</option>
+                        <select name="session_type" id="session_type" class="form-control" required>
+                            <option value="">-- Pilih Tipe Sesi --</option>
                             <option value="Cardio">Cardio</option>
                             <option value="Strength Training">Strength Training</option>
                             <option value="HIIT">HIIT</option>
@@ -60,6 +62,20 @@
                     </div>
                 </div>
 
+                <!-- Latihan yang Dilakukan (Dynamic) -->
+                <div class="mb-3">
+                    <label>Latihan yang Dilakukan</label>
+                    <select name="exercises_done" id="exercises_done" class="form-control">
+                        <option value="">-- Pilih latihan sesuai tipe sesi --</option>
+                    </select>
+                </div>
+
+                <!-- Catatan -->
+                <div class="mb-3">
+                    <label>Catatan Tambahan</label>
+                    <textarea name="notes" class="form-control" rows="4" placeholder="Catatan tambahan..."></textarea>
+                </div>
+
                 <div class="mb-3">
                     <label>Rating (1-5)</label>
                     <select name="rating" class="form-control">
@@ -72,15 +88,41 @@
                     </select>
                 </div>
 
-                <div class="mb-3">
-                    <label>Catatan / Latihan yang dilakukan</label>
-                    <textarea name="notes" class="form-control" rows="3"></textarea>
-                </div>
-
                 <button type="submit" class="btn btn-success">Simpan Sesi Latihan</button>
                 <a href="{{ route('sessions.index') }}" class="btn btn-secondary">Batal</a>
             </form>
         </div>
     </div>
 </div>
+
+<script>
+document.getElementById('session_type').addEventListener('change', function() {
+    const type = this.value;
+    const exercisesSelect = document.getElementById('exercises_done');
+    exercisesSelect.innerHTML = '<option value="">-- Pilih latihan --</option>';
+
+    let exercises = [];
+
+    if (type === 'Cardio') {
+        exercises = ['Running', 'Cycling', 'Jump Rope', 'Burpees', 'Mountain Climbers'];
+    } else if (type === 'Strength Training') {
+        exercises = ['Bench Press', 'Squats', 'Deadlift', 'Pull Ups', 'Shoulder Press'];
+    } else if (type === 'HIIT') {
+        exercises = ['Burpees', 'Jumping Jacks', 'High Knees', 'Push-ups', 'Plank Jacks'];
+    } else if (type === 'Yoga') {
+        exercises = ['Downward Dog', 'Warrior Pose', 'Plank', 'Tree Pose', 'Sun Salutation'];
+    } else if (type === 'CrossFit') {
+        exercises = ['Box Jump', 'Kettlebell Swing', 'Thruster', 'Wall Ball', 'Rowing'];
+    } else if (type === 'Personal Training') {
+        exercises = ['Custom Program', 'Core Training', 'Mobility Work', 'Functional Training'];
+    }
+
+    exercises.forEach(ex => {
+        const option = document.createElement('option');
+        option.value = ex;
+        option.textContent = ex;
+        exercisesSelect.appendChild(option);
+    });
+});
+</script>
 @endsection
