@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BodyMeasurementController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GymMemberController;
@@ -25,3 +26,8 @@ Route::get('/sessions/{session}', [WorkoutSessionController::class, 'show'])->na
 Route::get('/sessions/{session}/edit', [WorkoutSessionController::class, 'edit'])->name('sessions.edit');
 Route::put('/sessions/{session}', [WorkoutSessionController::class, 'update'])->name('sessions.update');
 Route::delete('/sessions/{session}', [WorkoutSessionController::class, 'destroy'])->name('sessions.destroy');
+
+// === BODY MEASUREMENT ROUTES ===
+Route::get('/members/{member}/measurements', [BodyMeasurementController::class, 'index'])->name('measurements.index');
+Route::get('/members/{member}/measurements/create', [BodyMeasurementController::class, 'create'])->name('measurements.create');
+Route::post('/members/{member}/measurements', [BodyMeasurementController::class, 'store'])->name('measurements.store');

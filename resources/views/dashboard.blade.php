@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1 class="mb-4">🏋️‍♂️ Dashboard Gym Management</h1>
+    <h1 class="mb-4">Dashboard Gym Management</h1>
 
     <div class="row g-4">
         <!-- Statistik Cards -->
@@ -42,10 +42,10 @@
 
     <div class="mt-5">
         <a href="{{ route('members.index') }}" class="btn btn-primary btn-lg me-3">
-            👥 Kelola Member
+            Kelola Member
         </a>
         <a href="{{ route('sessions.index') }}" class="btn btn-success btn-lg">
-            💪 Catat Sesi Latihan
+            Catat Sesi Latihan
         </a>
     </div>
 </div>
