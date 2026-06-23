@@ -41,4 +41,10 @@ class WorkoutSessionController extends Controller
         return redirect()->route('sessions.index')
                          ->with('success', 'Sesi latihan berhasil dicatat!');
     }
+
+    public function show(WorkoutSession $session)
+    {
+        $session->load('member'); // Eager loading
+        return view('sessions.show', compact('session'));
+    }
 }

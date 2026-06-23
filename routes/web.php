@@ -17,3 +17,4 @@ Route::get('/members/{member}', [GymMemberController::class, 'show'])->name('mem
 Route::get('/sessions', [WorkoutSessionController::class, 'index'])->name('sessions.index');
 Route::get('/sessions/create', [WorkoutSessionController::class, 'create'])->name('sessions.create');
 Route::post('/sessions', [WorkoutSessionController::class, 'store'])->name('sessions.store');
+Route::get('/sessions/{session}', [WorkoutSessionController::class, 'show'])->name('sessions.show');  // ← Tambahkan ini
