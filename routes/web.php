@@ -12,9 +12,15 @@ Route::get('/members', [GymMemberController::class, 'index'])->name('members.ind
 Route::get('/members/create', [GymMemberController::class, 'create'])->name('members.create');
 Route::post('/members', [GymMemberController::class, 'store'])->name('members.store');
 Route::get('/members/{member}', [GymMemberController::class, 'show'])->name('members.show');
+Route::get('/members/{member}/edit', [GymMemberController::class, 'edit'])->name('members.edit');
+Route::put('/members/{member}', [GymMemberController::class, 'update'])->name('members.update');
+Route::delete('/members/{member}', [GymMemberController::class, 'destroy'])->name('members.destroy');
 
 // === WORKOUT SESSION ROUTES ===
 Route::get('/sessions', [WorkoutSessionController::class, 'index'])->name('sessions.index');
 Route::get('/sessions/create', [WorkoutSessionController::class, 'create'])->name('sessions.create');
 Route::post('/sessions', [WorkoutSessionController::class, 'store'])->name('sessions.store');
-Route::get('/sessions/{session}', [WorkoutSessionController::class, 'show'])->name('sessions.show');  // ← Tambahkan ini
+Route::get('/sessions/{session}', [WorkoutSessionController::class, 'show'])->name('sessions.show');
+Route::get('/sessions/{session}/edit', [WorkoutSessionController::class, 'edit'])->name('sessions.edit');
+Route::put('/sessions/{session}', [WorkoutSessionController::class, 'update'])->name('sessions.update');
+Route::delete('/sessions/{session}', [WorkoutSessionController::class, 'destroy'])->name('sessions.destroy');
