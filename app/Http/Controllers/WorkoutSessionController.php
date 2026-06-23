@@ -8,12 +8,28 @@ use Illuminate\Http\Request;
 
 class WorkoutSessionController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $sessions = WorkoutSession::with('member')
-                    ->latest('session_date')
-                    ->paginate(10);
-        
+        $query = WorkoutSession::with('member');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->whereHas('member', function($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                ->orWhere('member_code', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('session_type')) {
+            $query->where('session_type', $request->session_type);
+        }
+
+        if ($request->filled('start_date') && $request->filled('end_date')) {
+            $query->whereBetween('session_date', [$request->start_date, $request->end_date]);
+        }
+
+        $sessions = $query->latest('session_date')->paginate(10)->withQueryString();
+
         return view('sessions.index', compact('sessions'));
     }
 

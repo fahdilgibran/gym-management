@@ -13,6 +13,28 @@
         <div class="alert alert-success">{{ session('success') }}</div>
     @endif
 
+    <!-- Form Pencarian & Filter -->
+    <form method="GET" class="mb-4">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <input type="text" name="search" class="form-control" 
+                    placeholder="Cari nama, kode member, atau email..." 
+                    value="{{ request('search') }}">
+            </div>
+            <div class="col-md-3">
+                <select name="status" class="form-control">
+                    <option value="">Semua Status</option>
+                    <option value="active" {{ request('status') == 'active' ? 'selected' : '' }}>Aktif</option>
+                    <option value="expired" {{ request('status') == 'expired' ? 'selected' : '' }}>Expired</option>
+                    <option value="suspended" {{ request('status') == 'suspended' ? 'selected' : '' }}>Suspended</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary w-100">Cari</button>
+            </div>
+        </div>
+    </form>
+
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr>

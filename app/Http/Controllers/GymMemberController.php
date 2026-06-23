@@ -7,9 +7,25 @@ use Illuminate\Http\Request;
 
 class GymMemberController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $members = GymMember::latest()->paginate(10);
+        $query = GymMember::query();
+
+        // Pencarian
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('member_code', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%");
+        }
+
+        // Filter Status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $members = $query->latest()->paginate(10)->withQueryString();
+
         return view('members.index', compact('members'));
     }
 
@@ -74,4 +90,5 @@ class GymMemberController extends Controller
         return redirect()->route('members.index')
                         ->with('success', 'Member berhasil dihapus!');
     }
+    
 }

@@ -16,6 +16,29 @@
         </div>
     @endif
 
+    <!-- Form Filter Sesi -->
+    <form method="GET" class="mb-4">
+        <div class="row g-3">
+            <div class="col-md-4">
+                <input type="text" name="search" class="form-control" 
+                    placeholder="Cari nama member..." value="{{ request('search') }}">
+            </div>
+            <div class="col-md-3">
+                <select name="session_type" class="form-control">
+                    <option value="">Semua Tipe Sesi</option>
+                    <option value="Cardio" {{ request('session_type') == 'Cardio' ? 'selected' : '' }}>Cardio</option>
+                    <option value="Strength Training" {{ request('session_type') == 'Strength Training' ? 'selected' : '' }}>Strength Training</option>
+                    <option value="HIIT" {{ request('session_type') == 'HIIT' ? 'selected' : '' }}>HIIT</option>
+                    <!-- tambahkan lainnya sesuai kebutuhan -->
+                </select>
+            </div>
+            <div class="col-md-5">
+                <button type="submit" class="btn btn-primary me-2">Filter</button>
+                <a href="{{ route('sessions.index') }}" class="btn btn-secondary">Reset</a>
+            </div>
+        </div>
+    </form>
+
     <table class="table table-striped table-hover">
         <thead class="table-dark">
             <tr>
