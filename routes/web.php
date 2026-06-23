@@ -6,6 +6,7 @@ use App\Http\Controllers\GymMemberController;
 use App\Http\Controllers\WorkoutSessionController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/reports', [DashboardController::class, 'reports'])->name('reports.index');
 
 // === GYM MEMBER ROUTES ===
 Route::get('/members', [GymMemberController::class, 'index'])->name('members.index');
