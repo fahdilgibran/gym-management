@@ -27,8 +27,8 @@ class GymMember extends Model
     ];
 
     protected $casts = [
-        'birth_date' => 'date',
-        'start_date' => 'date',
+        'birth_date'  => 'date',
+        'start_date'  => 'date',
         'expire_date' => 'date',
     ];
 
@@ -36,5 +36,10 @@ class GymMember extends Model
     public function workoutSessions()
     {
         return $this->hasMany(WorkoutSession::class, 'member_id');
+    }
+
+    public function bodyMeasurements()
+    {
+        return $this->hasMany(BodyMeasurement::class);
     }
 }
