@@ -46,7 +46,22 @@
                     @endif
                 </td>
                 <td>
-                    <a href="#" class="btn btn-info btn-sm">Detail</a>
+                    <a href="{{ route('sessions.show', $session) }}" 
+                    class="btn btn-info btn-sm">
+                        Detail
+                    </a>
+                </td>
+                <td>
+                    <a href="{{ route('sessions.edit', $session) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                    
+                    <form action="{{ route('sessions.destroy', $session) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Yakin ingin menghapus sesi ini?')">
+                            Delete
+                        </button>
+                    </form>
                 </td>
             </tr>
             @endforeach
