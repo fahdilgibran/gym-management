@@ -40,6 +40,6 @@ class GymMember extends Model
 
     public function bodyMeasurements()
     {
-        return $this->hasMany(BodyMeasurement::class);
+        return $this->hasMany(BodyMeasurement::class, 'member_id');
     }
 }

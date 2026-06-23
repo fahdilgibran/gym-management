@@ -30,6 +30,6 @@ class BodyMeasurement extends Model
 
     public function member()
     {
-        return $this->belongsTo(GymMember::class);
+        return $this->belongsTo(GymMember::class, 'member_id');
     }
 }
