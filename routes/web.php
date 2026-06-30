@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\BodyMeasurementController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GymMemberController;
+use App\Http\Controllers\NutritionLogController;
 use App\Http\Controllers\WorkoutSessionController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 Route::get('/reports', [DashboardController::class, 'reports'])->name('reports.index');
@@ -31,3 +32,8 @@ Route::delete('/sessions/{session}', [WorkoutSessionController::class, 'destroy'
 Route::get('/members/{member}/measurements', [BodyMeasurementController::class, 'index'])->name('measurements.index');
 Route::get('/members/{member}/measurements/create', [BodyMeasurementController::class, 'create'])->name('measurements.create');
 Route::post('/members/{member}/measurements', [BodyMeasurementController::class, 'store'])->name('measurements.store');
+
+// === NUTRITION LOG ROUTES ===
+Route::get('/members/{member}/nutrition/create', [NutritionLogController::class, 'create'])->name('nutrition.create');
+Route::post('/members/{member}/nutrition', [NutritionLogController::class, 'store'])->name('nutrition.store');
+Route::get('/members/{member}/nutrition', [NutritionLogController::class, 'index'])->name('nutrition.index');
