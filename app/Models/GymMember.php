@@ -42,4 +42,9 @@ class GymMember extends Model
     {
         return $this->hasMany(BodyMeasurement::class, 'member_id');
     }
+
+    public function nutritionLogs()
+    {
+        return $this->hasMany(NutritionLog::class)->latest();
+    }
 }
