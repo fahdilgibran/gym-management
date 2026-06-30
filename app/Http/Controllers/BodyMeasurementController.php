@@ -51,4 +51,37 @@ class BodyMeasurementController extends Controller
 
         return view('body_measurements.index', compact('member', 'measurements'));
     }
+
+    public function edit(BodyMeasurement $measurement)
+    {
+        $member = $measurement->member;
+        return view('body_measurements.edit', compact('measurement', 'member'));
+    }
+
+    public function update(Request $request, BodyMeasurement $measurement)
+    {
+        $request->validate([
+            'measurement_date' => 'required|date',
+            'weight_kg' => 'required|numeric|min:20',
+            'body_fat_percentage' => 'nullable|numeric',
+            'muscle_mass_kg' => 'nullable|numeric',
+            'chest_cm' => 'nullable|numeric',
+            'waist_cm' => 'nullable|numeric',
+            'arm_cm' => 'nullable|numeric',
+        ]);
+
+        $measurement->update($request->all());
+
+        return redirect()->route('measurements.index', $measurement->member_id)
+                        ->with('success', 'Pengukuran berhasil diperbarui!');
+    }
+
+    public function destroy(BodyMeasurement $measurement)
+    {
+        $member_id = $measurement->member_id;
+        $measurement->delete();
+
+        return redirect()->route('measurements.index', $member_id)
+                        ->with('success', 'Pengukuran berhasil dihapus!');
+    }
 }

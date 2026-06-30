@@ -32,8 +32,14 @@ Route::delete('/sessions/{session}', [WorkoutSessionController::class, 'destroy'
 Route::get('/members/{member}/measurements', [BodyMeasurementController::class, 'index'])->name('measurements.index');
 Route::get('/members/{member}/measurements/create', [BodyMeasurementController::class, 'create'])->name('measurements.create');
 Route::post('/members/{member}/measurements', [BodyMeasurementController::class, 'store'])->name('measurements.store');
+Route::get('/measurements/{measurement}/edit', [BodyMeasurementController::class, 'edit'])->name('measurements.edit');
+Route::put('/measurements/{measurement}', [BodyMeasurementController::class, 'update'])->name('measurements.update');
+Route::delete('/measurements/{measurement}', [BodyMeasurementController::class, 'destroy'])->name('measurements.destroy');
 
 // === NUTRITION LOG ROUTES ===
+Route::get('/members/{member}/nutrition', [NutritionLogController::class, 'index'])->name('nutrition.index');
 Route::get('/members/{member}/nutrition/create', [NutritionLogController::class, 'create'])->name('nutrition.create');
 Route::post('/members/{member}/nutrition', [NutritionLogController::class, 'store'])->name('nutrition.store');
-Route::get('/members/{member}/nutrition', [NutritionLogController::class, 'index'])->name('nutrition.index');
+Route::get('/nutrition/{log}/edit', [NutritionLogController::class, 'edit'])->name('nutrition.edit');
+Route::put('/nutrition/{log}', [NutritionLogController::class, 'update'])->name('nutrition.update');
+Route::delete('/nutrition/{log}', [NutritionLogController::class, 'destroy'])->name('nutrition.destroy');

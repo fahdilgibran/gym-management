@@ -50,4 +50,37 @@ class NutritionLogController extends Controller
 
         return view('nutrition.index', compact('member', 'logs'));
     }
+
+    public function edit(NutritionLog $log)
+    {
+        $member = $log->member;
+        return view('nutrition.edit', compact('log', 'member'));
+    }
+
+    public function update(Request $request, NutritionLog $log)
+    {
+        $request->validate([
+            'log_date' => 'required|date',
+            'calories_intake' => 'nullable|integer',
+            'protein_grams' => 'nullable|integer',
+            'carbs_grams' => 'nullable|integer',
+            'fats_grams' => 'nullable|integer',
+            'meals_description' => 'nullable|string',
+            'notes' => 'nullable|string',
+        ]);
+
+        $log->update($request->all());
+
+        return redirect()->route('nutrition.index', $log->member_id)
+                        ->with('success', 'Catatan nutrisi berhasil diperbarui!');
+    }
+
+    public function destroy(NutritionLog $log)
+    {
+        $member_id = $log->member_id;
+        $log->delete();
+
+        return redirect()->route('nutrition.index', $member_id)
+                        ->with('success', 'Catatan nutrisi berhasil dihapus!');
+    }
 }
