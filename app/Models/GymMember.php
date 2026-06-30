@@ -45,6 +45,6 @@ class GymMember extends Model
 
     public function nutritionLogs()
     {
-        return $this->hasMany(NutritionLog::class)->latest();
+        return $this->hasMany(NutritionLog::class, 'member_id');
     }
-}
+    }
