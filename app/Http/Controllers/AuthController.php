@@ -18,14 +18,26 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
+            'email'    => 'required|email',
+            'password' => 'required|min:6',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
+        $credentials = $request->only('email', 'password');
+
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('dashboard'))
-                ->with('success', 'Selamat datang, ' . Auth::user()->name);
+
+            $user = Auth::user();
+
+            // Redirect berdasarkan role
+            if ($user->role === 'member') {
+                return redirect()->route('my.dashboard')
+                                ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
+            } else {
+                // Admin & Staff
+                return redirect()->route('admin.dashboard')
+                                ->with('success', 'Selamat datang kembali, ' . $user->name . '!');
+            }
         }
 
         return back()->withErrors([
@@ -41,5 +53,32 @@ class AuthController extends Controller
 
         return redirect()->route('login')
             ->with('info', 'Anda telah berhasil logout.');
+    }
+
+    public function showRegisterForm()
+    {
+        return view('auth.register');
+    }
+
+    public function register(Request $request)
+    {
+        // Untuk sementara kita buat sederhana
+        $request->validate([
+            'name' => 'required|string|max:100',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6|confirmed',
+        ]);
+
+        $user = \App\Models\User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role' => 'member',           // default role untuk register
+        ]);
+
+        Auth::login($user);
+
+        return redirect()->route('my.dashboard')
+                        ->with('success', 'Registrasi berhasil! Selamat datang.');
     }
 }

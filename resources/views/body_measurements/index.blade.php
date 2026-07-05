@@ -30,13 +30,24 @@
             @foreach($measurements as $m)
             <tr>
                 <td>{{ $m->measurement_date->format('d M Y') }}</td>
-                <td><strong>{{ $m->weight_kg }}</strong></td>
-                <td>{{ $m->body_fat_percentage ?? '-' }}%</td>
-                <td>{{ $m->muscle_mass_kg ?? '-' }}</td>
-                <td>{{ $m->chest_cm ?? '-' }}</td>
-                <td>{{ $m->waist_cm ?? '-' }}</td>
-                <td>{{ $m->arm_cm ?? '-' }}</td>
-                <td>{{ Str::limit($m->notes, 50) ?? '-' }}</td>
+                <td><strong>{{ $m->weight_kg }} kg</strong></td>
+                <td>{{ $m->body_fat_percentage ? $m->body_fat_percentage . '%' : '-' }}</td>
+                <td>{{ $m->muscle_mass_kg ?? '-' }} kg</td>
+                <td>{{ $m->chest_cm ?? '-' }} cm</td>
+                <td>{{ $m->waist_cm ?? '-' }} cm</td>
+                <td>{{ $m->arm_cm ?? '-' }} cm</td>
+                <td>
+                    <a href="{{ route('measurements.edit', $m) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                    
+                    <form action="{{ route('measurements.destroy', $m) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Yakin ingin menghapus pengukuran ini?')">
+                            Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>

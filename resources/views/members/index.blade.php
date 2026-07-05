@@ -71,16 +71,20 @@
                     <a href="{{ route('members.show', $member) }}" class="btn btn-info btn-sm">Detail</a>
                 </td>
                 <td>
-                    <a href="{{ route('members.edit', $member) }}" class="btn btn-warning btn-sm me-1">Edit</a>
-                    
-                    <form action="{{ route('members.destroy', $member) }}" method="POST" class="d-inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Yakin ingin menghapus member ini?')">
-                            Delete
-                        </button>
-                    </form>
+                    @if(Auth::user()->role === 'admin')
+                        <a href="{{ route('members.edit', $member) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                        
+                        <form action="{{ route('members.destroy', $member) }}" method="POST" class="d-inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Yakin ingin menghapus member ini? Data dan riwayatnya juga akan terhapus.')">
+                                Delete
+                            </button>
+                        </form>
+                    @else
+                        <span class="text-muted small">—</span>
+                    @endif
                 </td>
             </tr>
             @endforeach

@@ -9,16 +9,40 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">Gym Management</a>
-            <div class="navbar-nav">
-                <a class="nav-link" href="{{ route('members.index') }}">Member</a>
-                <a class="nav-link" href="{{ route('sessions.index') }}">Sesi Latihan</a>
-                <a class="nav-link" href="{{ route('reports.index') }}">Laporan</a>
-            </div>
+    <div class="container">
+        <a class="navbar-brand" href="{{ route('welcome') }}">
+            Gym Management
+        </a>
+
+        <!-- User Info & Auth Buttons -->
+        <div class="navbar-nav">
+            @auth
+                <span class="navbar-text me-3">
+                    Halo, <strong>{{ auth()->user()->name }}</strong>
+                    <span class="badge bg-{{ auth()->user()->role === 'admin' ? 'danger' : 
+                            (auth()->user()->role === 'staff' ? 'warning' : 'success') }}">
+                        {{ ucfirst(auth()->user()->role) }}
+                    </span>
+                </span>
+
+                <form method="POST" action="{{ route('logout') }}" class="d-inline">
+                    @csrf
+                    <button type="submit" class="btn btn-outline-light btn-sm">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            @else
+                <!-- Tombol Login & Register -->
+                <a href="{{ route('login') }}" class="btn btn-primary btn-sm me-2">
+                    Login
+                </a>
+                <a href="{{ route('register') }}" class="btn btn-outline-light btn-sm">
+                    Daftar
+                </a>
+            @endauth
         </div>
-        
-    </nav>
+    </div>
+</nav>
 
     <main class="container mt-4">
         @yield('content')

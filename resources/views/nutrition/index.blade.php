@@ -33,8 +33,19 @@
                 <td>{{ $log->protein_grams ?? '-' }}g</td>
                 <td>{{ $log->carbs_grams ?? '-' }}g</td>
                 <td>{{ $log->fats_grams ?? '-' }}g</td>
-                <td>{{ Str::limit($log->meals_description, 60) ?? '-' }}</td>
-                <td>{{ Str::limit($log->notes, 50) ?? '-' }}</td>
+                <td>{{ Str::limit($log->meals_description, 50) ?? '-' }}</td>
+                <td>
+                    <a href="{{ route('nutrition.edit', $log) }}" class="btn btn-warning btn-sm me-1">Edit</a>
+                    
+                    <form action="{{ route('nutrition.destroy', $log) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Yakin ingin menghapus catatan nutrisi ini?')">
+                            Delete
+                        </button>
+                    </form>
+                </td>
             </tr>
             @endforeach
         </tbody>

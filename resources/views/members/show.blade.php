@@ -39,24 +39,32 @@
         </div>
     </div>
 
-    <!-- Tombol Fitur -->
+    <!-- Tombol Aksi (Hanya untuk Admin & Staff) -->
+    @if(Auth::user()->role === 'admin' || Auth::user()->role === 'staff')
     <div class="mb-4">
+        @if(Auth::user()->role === 'admin')
+            <a href="{{ route('members.edit', $member->id) }}" class="btn btn-warning btn-lg me-2">
+                Edit Data Member
+            </a>
+        @endif
+        
         <a href="{{ route('measurements.create', $member->id) }}" class="btn btn-primary btn-lg me-2">
             Catat Pengukuran Tubuh
         </a>
-        <a href="{{ route('nutrition.create', $member->id) }}" class="btn btn-success btn-lg me-2">
+        
+        <a href="{{ route('nutrition.create', $member->id) }}" class="btn btn-success btn-lg">
             Catat Nutrisi Harian
         </a>
-        <a href="{{ route('members.edit', $member->id) }}" class="btn btn-warning btn-lg">
-            Edit Data Member
-        </a>
     </div>
+    @endif
 
     <!-- Riwayat Pengukuran Tubuh -->
     <div class="card shadow mb-4">
         <div class="card-header bg-info text-white d-flex justify-content-between">
             <h5>Riwayat Pengukuran Tubuh Terbaru</h5>
-            <a href="{{ route('measurements.index', $member->id) }}" class="btn btn-sm btn-light">Lihat Semua</a>
+            @if(Auth::user()->role === 'admin' || Auth::user()->role === 'staff')
+                <a href="{{ route('measurements.index', $member->id) }}" class="btn btn-sm btn-light">Lihat Semua</a>
+            @endif
         </div>
         <div class="card-body">
             @if($member->bodyMeasurements->isEmpty())
@@ -90,7 +98,9 @@
     <div class="card shadow">
         <div class="card-header bg-success text-white d-flex justify-content-between">
             <h5>Riwayat Nutrisi Terbaru</h5>
-            <a href="{{ route('nutrition.index', $member->id) }}" class="btn btn-sm btn-light">Lihat Semua</a>
+            @if(Auth::user()->role === 'admin' || Auth::user()->role === 'staff')
+                <a href="{{ route('nutrition.index', $member->id) }}" class="btn btn-sm btn-light">Lihat Semua</a>
+            @endif
         </div>
         <div class="card-body">
             @if($member->nutritionLogs->isEmpty())
