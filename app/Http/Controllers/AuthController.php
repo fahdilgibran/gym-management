@@ -62,23 +62,36 @@ class AuthController extends Controller
 
     public function register(Request $request)
     {
-        // Untuk sementara kita buat sederhana
         $request->validate([
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
 
+        // Buat User
         $user = \App\Models\User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => bcrypt($request->password),
-            'role' => 'member',           // default role untuk register
+            'role' => 'member',
+        ]);
+
+        // Buat data Gym Member otomatis
+        \App\Models\GymMember::create([
+            'user_id' => $user->id,
+            'member_code' => 'MEM-' . strtoupper(substr(uniqid(), -6)),
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => '', // bisa diisi nanti di profile
+            'start_date' => now(),
+            'expire_date' => now()->addMonths(1), // default 1 bulan
+            'membership_type' => 'monthly',
+            'status' => 'active',
         ]);
 
         Auth::login($user);
 
         return redirect()->route('my.dashboard')
-                        ->with('success', 'Registrasi berhasil! Selamat datang.');
+                        ->with('success', 'Registrasi berhasil! Selamat datang di Gym Management.');
     }
 }

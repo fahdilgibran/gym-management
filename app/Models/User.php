@@ -27,4 +27,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function gymMember()
+    {
+        return $this->hasOne(GymMember::class, 'user_id'); // kita tambahkan kolom user_id nanti
+    }
+
+    public function isMember()
+    {
+        return $this->role === 'member';
+    }
 }

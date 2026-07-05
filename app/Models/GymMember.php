@@ -47,4 +47,9 @@ class GymMember extends Model
     {
         return $this->hasMany(NutritionLog::class, 'member_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
+}
