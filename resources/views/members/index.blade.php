@@ -37,24 +37,24 @@
 
     <table class="table table-striped table-hover">
         <thead class="table-dark">
-            <tr>
-                <th>Member Code</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>Membership</th>
-                <th>Expire Date</th>
-                <th>Status</th>
-                <th>Aksi</th>
-            </tr>
-        </thead>
+    <tr>
+        <th>Member Code</th>
+        <th>Nama</th>
+        <th>Email</th>
+        <th>No. Telepon</th>        <!-- ← Tambahkan ini -->
+        <th>Membership</th>
+        <th>Expire Date</th>
+        <th>Status</th>
+        <th>Aksi</th>
+    </tr>
+</thead>
         <tbody>
             @foreach($members as $member)
             <tr>
                 <td><strong>{{ $member->member_code }}</strong></td>
                 <td>{{ $member->name }}</td>
                 <td>{{ $member->email ?? '-' }}</td>
-                <td>{{ $member->phone }}</td>
+                <td>{{ $member->phone ?? $member->user?->phone ?? '-' }}</td>
                 <td>{{ ucfirst($member->membership_type) }}</td>
                 <td>{{ $member->start_date ? $member->start_date->format('Y-m-d') : '-' }}</td>
                 <td>{{ $member->expire_date ? $member->expire_date->format('Y-m-d') : '-' }}</td>

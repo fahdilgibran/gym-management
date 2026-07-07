@@ -1,6 +1,4 @@
-@extends('layouts.main')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="container py-5">
     <div class="row justify-content-center min-vh-100 align-items-center">
         <div class="col-lg-10 text-center">
@@ -22,7 +20,7 @@
                             </div>
                             <h4 class="card-title mb-3">Sudah Punya Akun?</h4>
                             <p class="text-muted mb-4">Masuk untuk mengelola data gym</p>
-                            <a href="{{ route('login') }}" class="btn btn-primary btn-lg px-5 py-3">
+                            <a href="<?php echo e(route('login')); ?>" class="btn btn-primary btn-lg px-5 py-3">
                                 <i class="fas fa-arrow-right"></i> Login
                             </a>
                         </div>
@@ -38,7 +36,7 @@
                             </div>
                             <h4 class="card-title mb-3">Belum Punya Akun?</h4>
                             <p class="text-muted mb-4">Daftar sebagai Member atau Staff</p>
-                            <a href="{{ route('register') }}" class="btn btn-outline-success btn-lg px-5 py-3">
+                            <a href="<?php echo e(route('register')); ?>" class="btn btn-outline-success btn-lg px-5 py-3">
                                 <i class="fas fa-user-plus"></i> Daftar Akun Baru
                             </a>
                         </div>
@@ -66,4 +64,5 @@
                 0 8px 10px -6px rgb(0 0 0 / 0.1) !important;
 }
 </style>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Laravel\gym-management\resources\views/welcome.blade.php ENDPATH**/ ?>

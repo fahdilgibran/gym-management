@@ -77,16 +77,16 @@ class AuthController extends Controller
         ]);
 
         // Buat data Gym Member otomatis
-        \App\Models\GymMember::create([
-            'user_id' => $user->id,
-            'member_code' => 'MEM-' . strtoupper(substr(uniqid(), -6)),
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => '', // bisa diisi nanti di profile
-            'start_date' => now(),
-            'expire_date' => now()->addMonths(1), // default 1 bulan
-            'membership_type' => 'monthly',
-            'status' => 'active',
+        $gymMember = \App\Models\GymMember::create([
+            'user_id'          => $user->id,
+            'member_code'      => 'MEM-' . strtoupper(substr(uniqid(), -6)),
+            'name'             => $user->name,
+            'email'            => $user->email,
+            'phone'            => '',
+            'start_date'       => now(),
+            'expire_date'      => now()->addMonths(3),
+            'membership_type'  => 'monthly',
+            'status'           => 'active',
         ]);
 
         Auth::login($user);

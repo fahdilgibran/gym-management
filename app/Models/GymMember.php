@@ -50,6 +50,15 @@ class GymMember extends Model
 
     public function user()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    // Accessor untuk mengambil phone dari User jika kosong di gym_members
+    public function getPhoneAttribute($value)
+    {
+        if ($value) {
+            return $value;
+        }
+        return $this->user?->phone ?? '-';
     }
 }

@@ -18,7 +18,8 @@
                     <p><strong>Member Code:</strong> {{ $member->member_code }}</p>
                     <p><strong>Nama:</strong> {{ $member->name }}</p>
                     <p><strong>Email:</strong> {{ $member->email ?? '-' }}</p>
-                    <p><strong>Telepon:</strong> {{ $member->phone }}</p>
+                    <p><strong>No. Telepon:</strong> {{ $member->phone ?? $member->user?->phone ?? '-' }}</p>
+                    <p><strong>Gender:</strong> {{ $member->gender == 'M' ? 'Laki-laki' : ($member->gender == 'F' ? 'Perempuan' : '-') }}</p>
                 </div>
                 <div class="col-md-6">
                     <p><strong>Tanggal Lahir:</strong> {{ $member->birth_date ? $member->birth_date->format('d M Y') : '-' }}</p>

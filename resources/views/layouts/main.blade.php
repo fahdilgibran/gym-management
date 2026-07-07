@@ -55,6 +55,7 @@
                             <li class="nav-item"><a class="nav-link" href="{{ route('reports.index') }}">Laporan</a></li>
                         @else
                             <li class="nav-item"><a class="nav-link" href="{{ route('my.dashboard') }}">My Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('profile') }}">Profil Saya</a></li>
                         @endif
                     @endauth
                 </ul>
