@@ -1,111 +1,121 @@
 @extends('layouts.main')
 
 @section('content')
-<div class="container">
-    <h2>Laporan & Statistik Gym</h2>
+<div class="container py-4">
+    <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
+        <div>
+            <h2 class="mb-1">Laporan & Statistik</h2>
+            <p class="text-muted mb-0">Pantau performa gym dan status member dalam satu tampilan.</p>
+        </div>
+        <a href="{{ route('members.index') }}" class="btn btn-outline-secondary btn-sm">Kembali ke Member</a>
+    </div>
 
-    <!-- Statistik Utama -->
-    <div class="row g-4 mb-5">
+    <div class="row g-4 mb-4">
         <div class="col-md-3">
-            <div class="card text-white bg-primary">
+            <div class="card border-top border-4 border-primary">
                 <div class="card-body">
-                    <h5>Total Member</h5>
-                    <h2>{{ $totalMembers }}</h2>
+                    <p class="text-uppercase text-muted small mb-2">Total Member</p>
+                    <h2 class="mb-0">{{ $totalMembers }}</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-success">
+            <div class="card border-top border-4 border-success">
                 <div class="card-body">
-                    <h5>Member Aktif</h5>
-                    <h2>{{ $activeMembers }}</h2>
+                    <p class="text-uppercase text-muted small mb-2">Member Aktif</p>
+                    <h2 class="mb-0">{{ $activeMembers }}</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-danger">
+            <div class="card border-top border-4 border-danger">
                 <div class="card-body">
-                    <h5>Expired</h5>
-                    <h2>{{ $expiredMembers }}</h2>
+                    <p class="text-uppercase text-muted small mb-2">Expired</p>
+                    <h2 class="mb-0">{{ $expiredMembers }}</h2>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card text-white bg-warning">
+            <div class="card border-top border-4 border-warning">
                 <div class="card-body">
-                    <h5>Total Kalori</h5>
-                    <h2>{{ number_format($totalCalories) }}</h2>
+                    <p class="text-uppercase text-muted small mb-2">Total Kalori</p>
+                    <h2 class="mb-0">{{ number_format($totalCalories) }}</h2>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="row">
-        <!-- Member Hampir Expired -->
+    <div class="row g-4 mb-4">
         <div class="col-md-6">
-            <div class="card shadow mb-4">
-                <div class="card-header bg-danger text-white">
-                    <h5>⚠️ Member Hampir Expired (30 hari)</h5>
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0">Member Hampir Expired</h5>
                 </div>
                 <div class="card-body">
                     @if($almostExpired->isEmpty())
-                        <p class="text-muted">Tidak ada member yang hampir expired.</p>
+                        <p class="text-muted">Tidak ada member yang mendekati masa expired.</p>
                     @else
-                        <ul class="list-group">
+                        <ul class="list-group list-group-flush">
                             @foreach($almostExpired as $member)
-                            <li class="list-group-item d-flex justify-content-between">
-                                <span>{{ $member->name }} ({{ $member->member_code }})</span>
-                                <span class="badge bg-warning">{{ $member->expire_date->format('d M Y') }}</span>
-                            </li>
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                    <div>
+                                        <strong>{{ $member->name }}</strong>
+                                        <div class="text-muted small">{{ $member->member_code }}</div>
+                                    </div>
+                                    <span class="badge bg-warning text-dark">{{ $member->expire_date->format('d M Y') }}</span>
+                                </li>
                             @endforeach
                         </ul>
                     @endif
                 </div>
             </div>
         </div>
-
-        <!-- Top Member -->
         <div class="col-md-6">
-            <div class="card shadow mb-4">
-                <div class="card-header bg-primary text-white">
-                    <h5>🏆 Top 5 Member Aktif</h5>
+            <div class="card shadow-sm h-100">
+                <div class="card-header bg-white border-bottom">
+                    <h5 class="mb-0">Top 5 Member Aktif</h5>
                 </div>
                 <div class="card-body">
-                    <ol>
-                        @foreach($topMembers as $member)
-                        <li class="mb-2">
-                            <strong>{{ $member->name }}</strong> 
-                            <span class="badge bg-info">{{ $member->workout_sessions_count }} sesi</span>
-                        </li>
-                        @endforeach
-                    </ol>
+                    @if($topMembers->isEmpty())
+                        <p class="text-muted">Belum ada data member aktif.</p>
+                    @else
+                        <ol class="list-group list-group-numbered">
+                            @foreach($topMembers as $member)
+                                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                                    <span>{{ $member->name }}</span>
+                                    <span class="badge bg-info">{{ $member->workout_sessions_count }} sesi</span>
+                                </li>
+                            @endforeach
+                        </ol>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Statistik Tipe Sesi -->
-    <div class="card shadow">
-        <div class="card-header bg-info text-white">
-            <h5>📈 Statistik per Tipe Sesi</h5>
+    <div class="card shadow-sm">
+        <div class="card-header bg-white border-bottom">
+            <h5 class="mb-0">Statistik Per Tipe Sesi</h5>
         </div>
         <div class="card-body">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Tipe Sesi</th>
-                        <th>Jumlah Sesi</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($sessionByType as $type)
-                    <tr>
-                        <td>{{ $type->session_type }}</td>
-                        <td><strong>{{ $type->total }}</strong> kali</td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table table-borderless align-middle">
+                    <thead>
+                        <tr>
+                            <th>Tipe Sesi</th>
+                            <th>Jumlah Sesi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($sessionByType as $type)
+                            <tr>
+                                <td>{{ $type->session_type }}</td>
+                                <td><strong>{{ $type->total }}</strong> kali</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

@@ -8,29 +8,81 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --primary: #0d6efd;
+            --primary: #4f46e5;
+            --secondary: #10b981;
+            --surface: #ffffff;
+            --surface-2: #f1f5f9;
+            --text-muted: #6b7280;
         }
         body {
-            background-color: #f8f9fa;
+            background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+            color: #1f2937;
         }
         .navbar {
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 3px 18px rgba(15, 23, 42, 0.08);
+            background: #111827;
+        }
+        .navbar-brand span {
+            color: var(--secondary);
+        }
+        .navbar .nav-link {
+            color: rgba(255,255,255,0.82);
+            transition: color 0.2s ease;
+        }
+        .navbar .nav-link:hover,
+        .navbar .nav-link.active {
+            color: #ffffff;
         }
         .card {
             border: none;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
+            border-radius: 18px;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: var(--surface);
         }
         .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+            box-shadow: 0 24px 50px rgba(15, 23, 42, 0.08);
+        }
+        .card-header {
+            border-radius: 18px 18px 0 0;
         }
         .btn {
-            border-radius: 8px;
+            border-radius: 12px;
+        }
+        .btn-outline-light {
+            color: #f8fafc;
+            border-color: rgba(248, 250, 252, 0.55);
+        }
+        .btn-outline-light:hover {
+            color: #111827;
+            background-color: rgba(248, 250, 252, 0.9);
         }
         .badge {
-            font-weight: 500;
+            font-weight: 600;
+        }
+        table thead th {
+            letter-spacing: 0.03em;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+        }
+        .alert {
+            border-radius: 14px;
+        }
+        .pagination {
+            --bs-pagination-padding-x: 0.6rem;
+            --bs-pagination-padding-y: 0.35rem;
+            --bs-pagination-font-size: 0.9rem;
+        }
+        .pagination .page-link {
+            font-size: 0.9rem;
+            line-height: 1.1;
+            padding: 0.35rem 0.6rem;
+            min-width: 2.1rem;
         }
     </style>
 </head>

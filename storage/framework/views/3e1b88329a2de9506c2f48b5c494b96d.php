@@ -1,26 +1,27 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="container py-4">
     <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
         <div>
             <h2 class="mb-1">Tambah Member Baru</h2>
             <p class="text-muted mb-0">Isi data member baru untuk mulai mencatat sesi dan laporan.</p>
         </div>
-        <a href="{{ route('members.index') }}" class="btn btn-outline-secondary btn-sm">Kembali ke Daftar</a>
+        <a href="<?php echo e(route('members.index')); ?>" class="btn btn-outline-secondary btn-sm">Kembali ke Daftar</a>
     </div>
 
-    @if(session('success'))
+    <?php if(session('success')): ?>
         <div class="alert alert-success alert-dismissible fade show rounded-4">
-            {{ session('success') }}
+            <?php echo e(session('success')); ?>
+
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
-    @endif
+    <?php endif; ?>
 
     <div class="card shadow-sm border-0">
         <div class="card-body">
-            <form action="{{ route('members.store') }}" method="POST">
-                @csrf
+            <form action="<?php echo e(route('members.store')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Nama Lengkap</label>
@@ -78,7 +79,7 @@
 
                 <div class="mt-4 d-flex flex-wrap gap-2">
                     <button type="submit" class="btn btn-primary">Simpan Member</button>
-                    <a href="{{ route('members.index') }}" class="btn btn-outline-secondary">Batal</a>
+                    <a href="<?php echo e(route('members.index')); ?>" class="btn btn-outline-secondary">Batal</a>
                 </div>
             </form>
         </div>
@@ -93,4 +94,5 @@
         }
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Laravel\gym-management\resources\views/members/create.blade.php ENDPATH**/ ?>

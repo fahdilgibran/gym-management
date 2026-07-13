@@ -90,5 +90,20 @@ class GymMemberController extends Controller
         return redirect()->route('members.index')
                         ->with('success', 'Member berhasil dihapus!');
     }
+
+    public function confirmMembership(GymMember $member)
+    {
+        $member->update([
+            'membership_status' => 'active',
+            'start_date' => now(),
+            'expire_date' => now()->addMonths(
+                $member->membership_type === 'monthly' ? 1 : 
+                ($member->membership_type === 'quarterly' ? 3 : 12)
+            ),
+        ]);
+
+        return redirect()->route('members.show', $member)
+                        ->with('success', 'Membership berhasil dikonfirmasi!');
+    }
     
 }

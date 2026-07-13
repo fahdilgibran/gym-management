@@ -42,15 +42,17 @@ Route::middleware(['auth'])->group(function () {
 
         // Members
         Route::get('/members', [GymMemberController::class, 'index'])->name('members.index');
-        Route::get('/members/{member}', [GymMemberController::class, 'show'])->name('members.show');
 
         // Hanya Admin
         Route::middleware(['role:admin'])->group(function () {
             Route::get('/members/create', [GymMemberController::class, 'create'])->name('members.create');
             Route::post('/members', [GymMemberController::class, 'store'])->name('members.store');
+            Route::get('/members/{member}', [GymMemberController::class, 'show'])->name('members.show');
             Route::get('/members/{member}/edit', [GymMemberController::class, 'edit'])->name('members.edit');
             Route::put('/members/{member}', [GymMemberController::class, 'update'])->name('members.update');
             Route::delete('/members/{member}', [GymMemberController::class, 'destroy'])->name('members.destroy');
+            // Konfirmasi Membership
+            Route::get('/members/{member}/confirm', [GymMemberController::class, 'confirmMembership'])->name('members.confirm');
         });
 
         // Admin + Staff

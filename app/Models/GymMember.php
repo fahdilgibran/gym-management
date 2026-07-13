@@ -24,6 +24,7 @@ class GymMember extends Model
         'emergency_contact',
         'photo',
         'status',
+        'membership_status'
     ];
 
     protected $casts = [

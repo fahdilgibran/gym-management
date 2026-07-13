@@ -1,28 +1,28 @@
-@extends('layouts.main')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 <div class="container py-4">
     <div class="d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-between gap-3 mb-4">
         <div>
             <h2 class="mb-1">Catat Sesi Latihan Baru</h2>
             <p class="text-muted mb-0">Input sesi latihan member dengan cepat dan mudah.</p>
         </div>
-        <a href="{{ route('sessions.index') }}" class="btn btn-outline-secondary btn-sm">Kembali ke Sesi</a>
+        <a href="<?php echo e(route('sessions.index')); ?>" class="btn btn-outline-secondary btn-sm">Kembali ke Sesi</a>
     </div>
 
     <div class="card shadow-sm border-0">
         <div class="card-body">
-            <form action="{{ route('sessions.store') }}" method="POST">
-                @csrf
+            <form action="<?php echo e(route('sessions.store')); ?>" method="POST">
+                <?php echo csrf_field(); ?>
 
                 <div class="row g-3">
                     <div class="col-md-6">
                         <label class="form-label">Member</label>
                         <select name="member_id" class="form-select" required>
                             <option value="">-- Pilih Member --</option>
-                            @foreach($members as $member)
-                                <option value="{{ $member->id }}">{{ $member->name }} ({{ $member->member_code }})</option>
-                            @endforeach
+                            <?php $__currentLoopData = $members; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $member): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option value="<?php echo e($member->id); ?>"><?php echo e($member->name); ?> (<?php echo e($member->member_code); ?>)</option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>
                     </div>
                     <div class="col-md-6">
@@ -97,7 +97,7 @@
 
                 <div class="mt-4 d-flex flex-wrap gap-2">
                     <button type="submit" class="btn btn-success">Simpan Sesi Latihan</button>
-                    <a href="{{ route('sessions.index') }}" class="btn btn-outline-secondary">Batal</a>
+                    <a href="<?php echo e(route('sessions.index')); ?>" class="btn btn-outline-secondary">Batal</a>
                 </div>
             </form>
         </div>
@@ -134,4 +134,5 @@
         });
     });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.main', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Laravel\gym-management\resources\views/sessions/create.blade.php ENDPATH**/ ?>

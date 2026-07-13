@@ -14,7 +14,7 @@
         $expireDate = $member?->expire_date ?? $user->expire_date;
         $startDate = $member?->start_date ?? $user->start_date;
         $status = $member?->status ?? 'active';
-
+        
         if ($status === 'active') {
             $membershipBadge = 'success';
             $membershipText = 'Aktif';
@@ -25,12 +25,24 @@
             $membershipBadge = 'secondary';
             $membershipText = 'Ditangguhkan';
         }
-
+        
         if ($expireDate) {
             $daysLeft = now()->startOfDay()->diffInDays($expireDate->copy()->startOfDay(), false);
         }
     @endphp
 
+    <!-- Notifikasi Membership Status -->
+    @if($member && $member->membership_status === 'pending')
+        <div class="alert alert-warning alert-dismissible fade show">
+            <strong>Membership Anda masih Pending!</strong> Mohon tunggu konfirmasi dari Admin.
+        </div>
+    @elseif($member && $member->membership_status === 'active')
+        <div class="alert alert-success alert-dismissible fade show">
+            Membership Anda aktif sampai <strong>{{ $member->expire_date->format('d M Y') }}</strong>
+        </div>
+    @endif
+
+    <!-- Info Membership -->
     <div class="alert alert-info shadow-sm d-flex justify-content-between align-items-center">
         <div>
             <strong>Membership Anda:</strong> {{ ucfirst($membershipType) }}
@@ -53,7 +65,7 @@
             <div class="card text-white bg-primary shadow">
                 <div class="card-body text-center">
                     <h5>Total Sesi Latihan</h5>
-                    <h2>{{ $totalSessions }}</h2>
+                    <h2>{{ $totalSessions ?? 0 }}</h2>
                 </div>
             </div>
         </div>
@@ -61,7 +73,7 @@
             <div class="card text-white bg-success shadow">
                 <div class="card-body text-center">
                     <h5>Total Kalori Terbakar</h5>
-                    <h2>{{ number_format($totalCalories) }}</h2>
+                    <h2>{{ number_format($totalCalories ?? 0) }}</h2>
                 </div>
             </div>
         </div>

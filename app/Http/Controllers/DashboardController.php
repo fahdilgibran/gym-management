@@ -19,11 +19,23 @@ class DashboardController extends Controller
         $totalSessions = WorkoutSession::count();
         $totalCalories = WorkoutSession::sum('calories_burned');
 
+        $almostExpired = GymMember::where('status', 'active')
+            ->where('expire_date', '<=', now()->addDays(30))
+            ->orderBy('expire_date')
+            ->get();
+
+        $topMembers = GymMember::withCount('workoutSessions')
+            ->orderByDesc('workout_sessions_count')
+            ->take(5)
+            ->get();
+
         return view('dashboard', compact(
             'totalMembers', 
             'activeMembers', 
             'totalSessions', 
-            'totalCalories'
+            'totalCalories',
+            'almostExpired',
+            'topMembers'
         ));
     }
     public function reports()

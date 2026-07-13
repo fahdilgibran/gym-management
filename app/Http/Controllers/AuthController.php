@@ -66,9 +66,9 @@ class AuthController extends Controller
             'name' => 'required|string|max:100',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6|confirmed',
+            'membership_type' => 'required|in:monthly,quarterly,annual',
         ]);
 
-        // Buat User
         $user = \App\Models\User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -76,22 +76,22 @@ class AuthController extends Controller
             'role' => 'member',
         ]);
 
-        // Buat data Gym Member otomatis
-        $gymMember = \App\Models\GymMember::create([
-            'user_id'          => $user->id,
-            'member_code'      => 'MEM-' . strtoupper(substr(uniqid(), -6)),
-            'name'             => $user->name,
-            'email'            => $user->email,
-            'phone'            => '',
-            'start_date'       => now(),
-            'expire_date'      => now()->addMonths(3),
-            'membership_type'  => 'monthly',
-            'status'           => 'active',
+        \App\Models\GymMember::create([
+            'user_id' => $user->id,
+            'member_code' => 'MEM-' . strtoupper(substr(uniqid(), -6)),
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => '',
+            'membership_type' => $request->membership_type,
+            'start_date' => now(),
+            'expire_date' => now()->addMonths($request->membership_type === 'monthly' ? 1 : ($request->membership_type === 'quarterly' ? 3 : 12)),
+            'status' => 'active',
+            'membership_status' => 'pending',   // Pending konfirmasi admin
         ]);
 
         Auth::login($user);
 
         return redirect()->route('my.dashboard')
-                        ->with('success', 'Registrasi berhasil! Selamat datang di Gym Management.');
+                        ->with('info', 'Pendaftaran berhasil. Membership Anda sedang menunggu konfirmasi Admin.');
     }
 }
